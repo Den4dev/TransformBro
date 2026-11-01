@@ -1,0 +1,23 @@
+﻿FFmpeg, входящий в состав TransformBro
+===================================
+
+В установщик и portable-архив включён ffmpeg.exe — сборка проекта FFmpeg.
+
+Лицензия FFmpeg: GPL версии 3 или более поздней (для сборок gpl) либо
+LGPL версии 2.1 или более поздней (для сборок LGPL), в зависимости от
+подключённых библиотек. Полный текст лицензий:
+  https://ffmpeg.org/legal.html
+  https://www.gnu.org/licenses/gpl-3.0.html
+  https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
+Исходные коды и готовые сборки FFmpeg доступны на официальных зеркалах:
+  https://ffmpeg.org/download.html
+  https://github.com/BtbN/FFmpeg-Builds/releases
+  https://www.gyan.dev/ffmpeg/builds/
+
+Использование самого TransformBro (код TransformBro.py) распространяется под
+лицензией MIT и не зависит от лицензии FFmpeg: программа вызывает ffmpeg.exe
+как отдельный процесс и не линкуется с ним.
+
+Если вы перепубликуете этот релиз, сохраняйте этот файл и обеспечивайте
+доступ к исходникам FFmpeg (или ссылку на них), как того требует GPL/LGPL.

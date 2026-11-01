@@ -1,0 +1,55 @@
+﻿name: Сборка релиза
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Зависимости
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: NSIS
+        run: choco install nsis --yes --no-progress
+
+      - name: Сборка exe
+        run: python -m PyInstaller --noconfirm TransformBro.spec
+
+      - name: Установщик и portable-архивы
+        run: python packaging/build_release.py --skip-build
+
+      - name: Проверка артефактов
+        run: |
+          Get-ChildItem release | Format-Table Name, Length
+          if (-not (Test-Path release/TransformBro-*-Setup.exe)) { exit 1 }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TransformBro-build
+          path: |
+            release/*.exe
+            release/*.zip
+            release/RELEASE_NOTES.md
+
+      - name: Опубликовать релиз
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/TransformBro-*-Setup.exe
+          body_path: release/RELEASE_NOTES.md
+          make_latest: "true"

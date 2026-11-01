@@ -1,0 +1,24 @@
+# сборка и окружение
+.venv/
+__pycache__/
+*.pyc
+build/
+dist/
+release/
+tools/
+build_log.txt
+release_log.txt
+
+# копия exe в корне — удобство «двойной клик», не для репозитория
+TransformBro.exe
+
+# рабочие заметки не для репозитория
+1.txt
+
+# бинарные компоненты релиза (качаются/копируются на CI)
+payload/ffmpeg.exe
+
+# тестовые артефакты
+_TESTS/_out/
+_TESTS/_drop/
+_TESTS/*.log
