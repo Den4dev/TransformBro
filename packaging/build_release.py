@@ -165,7 +165,12 @@ def main():
         if setup.exists():
             setup.unlink()
         t0 = time.time()
-        run([str(makensis), f"/DINSTALL_SIZE_KB={size_kb}", "TransformBro.nsi"], cwd=ROOT / "packaging")
+        run([
+            str(makensis),
+            f"/DAPP_VERSION={version}",
+            f"/DINSTALL_SIZE_KB={size_kb}",
+            "TransformBro.nsi",
+        ], cwd=ROOT / "packaging")
         if not setup.exists():
             sys.exit("makensis отработал, но установщик не появился")
         print(f"установщик: {setup.stat().st_size / 1024 / 1024:.1f} МБ за {time.time() - t0:.0f} с")

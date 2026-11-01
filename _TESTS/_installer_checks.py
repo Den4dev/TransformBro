@@ -2,6 +2,7 @@
 """Тихая установка Setup.exe, проверка файлов/ярлыков/реестра, запуск, скриншот, удаление."""
 import ctypes
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -9,11 +10,17 @@ import time
 import winreg
 from pathlib import Path
 
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = Path(__file__).resolve().parent.parent
 RELEASE = ROOT / "release"
-VERSION = "1.1.0"
+VERSION = re.search(
+    r'^APP_VERSION = "([^"]+)"',
+    (ROOT / "TransformBro.py").read_text(encoding="utf-8"),
+    re.M,
+).group(1)
 SETUP = RELEASE / f"TransformBro-{VERSION}-Setup.exe"
-TARGET = Path(os.environ["TEMP"]) / "fl_install_test"
+TARGET = Path(os.environ["TEMP"]) / "transformbro_install_test"
 APPDATA_LOCAL = Path(os.environ["LOCALAPPDATA"])
 checks = []
 
@@ -73,8 +80,10 @@ def main():
         sm = APPDATA_LOCAL / "Microsoft/Windows/Start Menu/Programs/TransformBro"
     lnk = sorted(p.name for p in sm.glob("*.lnk")) if sm.exists() else []
     check("start_menu", len(lnk) == 3, lnk)
-    check("no_desktop_shortcut_by_default",
-          not (Path(os.environ["USERPROFILE"]) / "Desktop" / "TransformBro.lnk").exists())
+    # Ярлык на рабочем столе создаётся по умолчанию (в т.ч. при /S) — приложение
+    # должно быть готово к работе сразу после установки.
+    check("desktop_shortcut_by_default",
+          (Path(os.environ["USERPROFILE"]) / "Desktop" / "TransformBro.lnk").exists())
 
     ok, detail = False, ""
     try:

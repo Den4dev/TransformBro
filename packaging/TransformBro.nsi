@@ -5,7 +5,10 @@
 !include "LogicLib.nsh"
 
 !define APP_NAME    "TransformBro"
-!define APP_VERSION "1.1.0"
+; Версия приходит из build_release.py (/DAPP_VERSION=...), значение ниже — для ручной сборки
+!ifndef APP_VERSION
+  !define APP_VERSION "1.1.1"
+!endif
 !define APP_PUB     "Den4dev"
 !define EXE_NAME    "TransformBro.exe"
 !define UNREG_KEY   "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
@@ -81,7 +84,7 @@ Section "${APP_NAME} (обязательно)" SecMain
   WriteRegStr HKCU "Software\${APP_NAME}" "Version" "${APP_VERSION}"
 SectionEnd
 
-Section /o "Ярлык на рабочем столе" SecDesktop
+Section "Ярлык на рабочем столе" SecDesktop
   CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${EXE_NAME}" "" "$INSTDIR\${EXE_NAME}" 0
 SectionEnd
 

@@ -14,11 +14,11 @@ VSVersionInfo(
     StringFileInfo([StringTable('040904b0', [
       StringStruct('CompanyName', 'Den4dev'),
       StringStruct('FileDescription', 'TransformBro — конвертер файлов'),
-      StringStruct('FileVersion', '1.1.0'),
+      StringStruct('FileVersion', '1.1.1'),
       StringStruct('InternalName', 'TransformBro'),
       StringStruct('OriginalFilename', 'TransformBro.exe'),
       StringStruct('ProductName', 'TransformBro'),
-      StringStruct('ProductVersion', '1.1.0'),
+      StringStruct('ProductVersion', '1.1.1'),
       StringStruct('LegalCopyright', 'MIT License'),
     ])]),
     VarFileInfo([VarStruct('Translation', [1033, 1200])]),

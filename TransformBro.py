@@ -39,7 +39,7 @@ try:
 except ImportError:
     HAS_FITZ = False
 
-APP_VERSION = "1.1.0"
+APP_VERSION = "1.1.1"
 
 
 def resource_path(relative: str) -> Path:
