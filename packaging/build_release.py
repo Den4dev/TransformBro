@@ -15,6 +15,10 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
+# CI на Windows запускает скрипт в консоли cp1252 — кириллица в print() роняет сборку.
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 PAYLOAD = ROOT / "payload"
